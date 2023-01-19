@@ -13,6 +13,9 @@ public class BallController : MonoBehaviour
 
     public AudioClip ballRollClip, ballHitClip;
     private AudioSource tableCollisionAudioSource;
+    public AudioClip coinClip;
+    private AudioSource effectsAudioSource;
+    public GameObject moneyParticleSystem;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,7 @@ public class BallController : MonoBehaviour
         initialLocation = rigidBody.transform.position;
         initialVelocity = rigidBody.velocity;
         tableCollisionAudioSource = gameObject.AddComponent<AudioSource>();
+        effectsAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -47,12 +51,25 @@ public class BallController : MonoBehaviour
         //ball hitting table first time, play bounce clip
         if(collision.gameObject.tag=="Table" && isTouchingTable==false)
             {
-            isTouchingTable=true;
-            tableCollisionAudioSource.PlayOneShot(ballHitClip);
+                isTouchingTable=true;
+                tableCollisionAudioSource.PlayOneShot(ballHitClip);
             }
     }
     public void OnCollisionExit(Collision collision)
         {
             isTouchingTable=false;
         }
+
+    public void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.tag=="Coin")
+                {
+                    effectsAudioSource.pitch = 1;
+                    effectsAudioSource.PlayOneShot(coinClip);
+                    Destroy(other.gameObject);
+                    Instantiate(moneyParticleSystem,other.gameObject.transform.position,
+                    Quaternion.identity, other.gameObject.transform.parent.transform);
+                    ScoreDisplay.scoreValue++; 
+                }
+        } 
 }

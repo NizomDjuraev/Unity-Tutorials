@@ -349,6 +349,9 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/BallController.cs"
+"Assets/Scripts/CameraTransform.cs"
+"Assets/Scripts/CoinRotator.cs"
+"Assets/Scripts/ScoreDisplay.cs"
 "Assets/Scripts/TableRotator.cs"
 -langversion:9.0
 
